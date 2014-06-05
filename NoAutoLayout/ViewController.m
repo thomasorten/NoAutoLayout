@@ -9,7 +9,9 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UIView *redView;
+@property (weak, nonatomic) IBOutlet UIView *blueView;
+@property CGRect redViewFrame;
 @end
 
 @implementation ViewController
@@ -17,13 +19,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	self.redViewFrame = self.redView.frame;
 }
 
-- (void)didReceiveMemoryWarning
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    if (fromInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+        NSLog(@"to portrait");
+        self.redView.frame = self.redViewFrame;
+    } else {
+        NSLog(@"to landscape");
+        self.redView.frame = CGRectMake(self.redView.frame.origin.x, self.redView.frame.origin.y, 50, 50);
+    }
 }
 
 @end
